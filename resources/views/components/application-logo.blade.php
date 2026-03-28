@@ -1,0 +1,1 @@
+<img src="{{ asset('images/logo-epal.png') }}" alt="EPAL Logo" class="h-12 w-auto">
