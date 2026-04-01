@@ -31,9 +31,9 @@
                                 {{ $mission->date_mission }}
                             </td>
 
-                            <td class="p-3 font-semibold text-blue-600 dark:text-blue-400">{{ $mission->shift }}</td>
+                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->shift }}</td>
                             
-                            <td class="p-3 uppercase text-xs">{{ $mission->zone }}</td>
+                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->zone }}</td>
 
                             <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
                             <span class="block font-semibold">{{ $mission->engin->designation ?? 'N/A' }}</span>
