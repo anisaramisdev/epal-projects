@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         // 2. Fetch Stats using Full Model Paths
         $enginsDispo = \App\Models\Engin::where('etat', 'Disponible')->count();
-        $enginsEnPanne = \App\Models\Engin::where('etat', 'En Panne')->count();
+        $enginsEnPanne = \App\Models\Engin::where('etat', 'En Maintenance')->count();
         $missionsToday = \App\Models\Mission::whereDate('date_mission', \Carbon\Carbon::today())->count();
         $totalConducteurs = \App\Models\Conducteur::count();
 

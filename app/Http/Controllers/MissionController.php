@@ -8,11 +8,24 @@ use Illuminate\Http\Request;
 
 class MissionController extends Controller
 {
-    public function index()
-    {
-        $missions = Mission::with(['engin', 'conducteur'])->latest()->get();
-        return view('missions.index', compact('missions'));
+ public function index(Request $request)
+{
+    // Professional approach: Only show missions where the engine is still "En Mission"
+    // This removes completed/archived missions from the view instantly
+    $query = \App\Models\Mission::with(['engin', 'conducteur'])
+        ->whereHas('engin', function($q) {
+            $q->where('etat', 'En Mission');
+        });
+
+    // Keep your date filter logic
+    if ($request->has('filter_date') && $request->filter_date != '') {
+        $query->whereDate('date_mission', $request->filter_date);
     }
+
+    $missions = $query->latest()->get();
+
+    return view('missions.index', compact('missions'));
+}
 
     public function create()
     {
@@ -26,15 +39,25 @@ public function store(Request $request)
     $request->validate([
         'shift' => 'required',
         'zone' => 'required',
-        'destination' => 'required|string|max:255', // Added
+        'destination' => 'required|string|max:255',
         'engin_id' => 'required|exists:engins,id',
         'conducteur_id' => 'required|exists:conducteurs,id',
         'date_mission' => 'required|date',
     ]);
 
+    // PREVENT DUPLICATES: Check if engine is actually still available
+    $engin = \App\Models\Engin::findOrFail($request->engin_id);
+    if ($engin->etat !== 'Disponible') {
+        return back()->with('error', 'Cet engin vient juste d\'être affecté à une autre mission.');
+    }
+
+    // 1. Create the Mission
     $mission = Mission::create($request->all());
 
-    // Log with the destination for better traceability
+    // 2. IMPORTANT: Lock the engine so it doesn't show up in the list again
+    $engin->update(['etat' => 'En Mission']);
+
+    // Log for traceability
     ActivityLog::record('Création Mission', "ID: {$mission->id} -> Zone: {$mission->zone} -> Dest: {$mission->destination}");
 
     return redirect()->route('missions.index')->with('success', 'Mission créée avec succès !');
@@ -61,7 +84,7 @@ public function update(Request $request, $id)
         'destination' => 'required|string|max:255',
         'engin_id' => 'required|exists:engins,id',
         'conducteur_id' => 'required|exists:conducteurs,id',
-        'date_mission' => 'required|date',
+        'date_mission' => 'required|date|after_or_equal:today',
     ]);
 
     $mission->update($request->all());
@@ -86,9 +109,32 @@ public function show($id)
         $mission = Mission::findOrFail($id);
         $mission->delete();
 
-        // LOG ACTION (Admin only)
-        ActivityLog::record('Suppression Mission', 'ID: ' . $id);
+        // Professional Cleanup: If the mission had an engine, make it available again
+        if ($mission->engin_id) {
+        \App\Models\Engin::where('id', $mission->engin_id)
+            ->update(['etat' => 'Disponible']);
+        }
 
-        return redirect()->route('missions.index')->with('success', 'Mission annulée/supprimée.');
+        // LOG ACTION (Admin only)
+        ActivityLog::record('Suppression Mission', 'ID:  {$id} - Engin Libéré');
+
+        return redirect()->route('missions.index')->with('success', 'Mission annulée et engin libéré.');
     }
+
+public function complete($id)
+{
+    $mission = \App\Models\Mission::findOrFail($id);
+    
+    // 1. Release the engine (This is what triggers the "disappearing" from the list)
+    if ($mission->engin_id) {
+        \App\Models\Engin::where('id', $mission->engin_id)
+            ->update(['etat' => 'Disponible']);
+    }
+
+    // 2. Log it professionally
+    \App\Models\ActivityLog::record('Mission Terminée', "Mission #{$mission->id} achevée.");
+
+    return redirect()->route('missions.index')->with('success', 'Mission terminée et engin libéré.');
+}
+
 }

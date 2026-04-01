@@ -36,7 +36,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date de Mission</label>
-                    <input type="date" name="date_mission" class="w-full rounded-md border-gray-300 dark:bg-gray-900 dark:text-gray-300" required>
+                    <input type="date" name="date_mission" min="{{ date('Y-m-d') }}" class="w-full rounded-md border-gray-300 dark:bg-gray-900 dark:text-gray-300" required>
                 </div>
 
                 <div class="mb-4">
@@ -67,4 +67,13 @@
             </form>
         </div>
     </div>
+
+    <script>
+    document.querySelector('form').onsubmit = function() {
+        const btn = this.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerText = 'Traitement en cours';
+    };
+</script>
+
 </x-app-layout>

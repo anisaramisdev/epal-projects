@@ -24,47 +24,52 @@
                         </tr>
                     </thead>
                     <tbody class="text-sm">
-                        @foreach($missions as $mission)
-                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
-    
-                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
-                                {{ $mission->date_mission }}
-                            </td>
+    @foreach($missions as $mission)
+    <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+        
+        <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
+            {{ $mission->date_mission }}
+        </td>
 
-                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->shift }}</td>
-                            
-                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->zone }}</td>
+        <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->shift }}</td>
+        
+        <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">{{ $mission->zone }}</td>
 
-                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
-                            <span class="block font-semibold">{{ $mission->engin->designation ?? 'N/A' }}</span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase">[{{ $mission->engin->code ?? '???' }}]</span>
-                            </td>
+        <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
+            <span class="block font-semibold">{{ $mission->engin->designation ?? 'N/A' }}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase">[{{ $mission->engin->code ?? '???' }}]</span>
+        </td>
 
-                            <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
-                            {{ $mission->conducteur->nom ?? 'N/A' }} {{ $mission->conducteur->prenom ?? '' }}
-                            </td>
+        <td class="py-4 px-6 text-center text-gray-900 dark:text-gray-100">
+            {{ $mission->conducteur->nom ?? 'N/A' }} {{ $mission->conducteur->prenom ?? '' }}
+        </td>
 
-                            <td class="py-4 px-6 text-center text-gray-600 dark:text-gray-300 italic">
-                            {{ $mission->destination }}
-                            </td>
+        <td class="py-4 px-6 text-center text-gray-600 dark:text-gray-300 italic">
+            {{ $mission->destination }}
+        </td>
 
-                            <td class="py-4 px-6 text-center">
-                            <div class="flex items-center justify-center space-x-4">
-                            <a href="{{ route('missions.print', $mission->id) }}" target="_blank" class="text-green-600 dark:text-green-400 font-bold hover:underline">
-                            Imprimer
-                            </a>
-                            <a href="{{ route('missions.edit', $mission->id) }}" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-                            Modifier
-                            </a>
-                            <form action="{{ route('missions.destroy', $mission->id) }}" method="POST" onsubmit="return confirm('Terminer cette mission ?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="text-red-600 dark:text-red-400 font-bold hover:underline">Supprimer</button>
-                            </form>
-                            </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+        <td class="py-4 px-6 text-center">
+            <div class="flex items-center justify-center space-x-3">
+                <a href="{{ route('missions.print', $mission->id) }}" target="_blank" class="text-green-600 dark:text-green-400 font-bold hover:underline text-xs uppercase">
+                    Imprimer
+                </a>
+
+                <a href="{{ route('missions.edit', $mission->id) }}" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline text-xs uppercase">
+                    Modifier
+                </a>
+
+                <form action="{{ route('missions.complete', $mission->id) }}" method="POST" onsubmit="return confirm('Confirmer la fin de mission ?')">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="bg-green-100 text-green-700 px-2 py-1 rounded border border-green-300 hover:bg-green-200 font-bold text-xs uppercase transition">
+                        Terminer
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
                 </table>
             </div>
         </div>

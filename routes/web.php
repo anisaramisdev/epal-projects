@@ -57,5 +57,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/missions/{id}', [MissionController::class, 'update'])->name('missions.update');
     Route::delete('/missions/{id}', [MissionController::class, 'destroy'])->name('missions.destroy');
 });
+Route::get('/missions/{id}/edit', [MissionController::class, 'edit'])->name('missions.edit');
+Route::put('/missions/{id}', [MissionController::class, 'update'])->name('missions.update');
+Route::patch('/missions/{id}/complete', [MissionController::class, 'complete'])->name('missions.complete');
 
 require __DIR__.'/auth.php';
