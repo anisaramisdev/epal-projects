@@ -147,7 +147,7 @@
                                 Journal des Opérations
                             </h4>
                             <a href="{{ route('admin.logs') }}"
-                               class="text-[10px] font-black text-blue-600 dark:text-blue-400 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/40 transition">
+                               class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wide">
                                 HISTORIQUE →
                             </a>
                         </div>
