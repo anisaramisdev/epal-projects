@@ -101,7 +101,7 @@
                                 <option value="Zone Nord"        {{ old('zone') == 'Zone Nord' ? 'selected' : '' }}>Zone Nord</option>
                                 <option value="Zone Centre"      {{ old('zone') == 'Zone Centre' ? 'selected' : '' }}>Zone Centre</option>
                                 <option value="Zone Sud"         {{ old('zone') == 'Zone Sud' ? 'selected' : '' }}>Zone Sud</option>
-                                <option value="Quais Extérieurs" {{ old('zone') == 'Quais Extérieurs' ? 'selected' : '' }}>Quais Extérieurs</option>
+                                <option value="Quais Extérieurs" {{ old('zone') == 'Quais Extérieurs' ? 'selected' : '' }}>Extérieurs</option>
                             </select>
                         </div>
                     </div>

@@ -22,7 +22,7 @@
     </x-slot>
 
     <div class="py-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8 ">
 
             {{-- =============================== --}}
             {{-- STAT CARDS                       --}}
