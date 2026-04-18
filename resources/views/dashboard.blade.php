@@ -108,7 +108,7 @@
                             Répartition / Zone · Aujourd'hui
                         </h4>
 
-                        <div class="space-y-5">
+                        <div class="space-y-5 text-gray-400">
                             @if($zones->count() > 0)
                                 @foreach($zones as $z)
                                     @php
@@ -164,7 +164,7 @@
                                             ⚙️
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-gray-800 dark:text-gray-100">
+                                            <p class="text-sm font-black text-gray-800 dark:text-gray-500">
                                                 {{ $log->action }}
                                             </p>
                                             <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide mt-0.5">
@@ -173,7 +173,7 @@
                                         </div>
                                     </div>
                                     <div class="text-right flex-shrink-0 ml-4">
-                                        <p class="text-[10px] font-black text-gray-700 dark:text-gray-300 uppercase">
+                                        <p class="text-[10px] font-black text-gray-700 dark:text-gray-500 uppercase">
                                             {{ $log->user_name }}
                                         </p>
                                         <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 mt-0.5">

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Modifier l'Engin - EPAL</title>
 </head>
-<body>
-    <h1>Modifier l'Engin : {{ $engin->code }}</h1>  
+<body>  
     
 <x-app-layout>
     <x-slot name="header">
