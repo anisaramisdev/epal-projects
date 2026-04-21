@@ -7,7 +7,8 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            
+
+            {{-- 3 cards on top --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a href="{{ route('register') }}" class="p-6 bg-white dark:bg-gray-800 border-l-4 border-blue-500 shadow-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                     <div class="text-blue-500 font-bold text-lg"> Créer un Agent</div>
@@ -17,13 +18,15 @@
                 <a href="{{ route('admin.logs') }}" class="p-6 bg-white dark:bg-gray-800 border-l-4 border-yellow-500 shadow-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                     <div class="font-bold text-gray-800 dark:text-gray-200 mb-4 uppercase"> Journaux (Logs)</div>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Voir l'historique des actions du système.</p>
-                    </a>
+                </a>
 
                 <a href="{{ route('admin.backup') }}" class="p-6 bg-white dark:bg-gray-800 border-l-4 border-green-500 shadow-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                     <div class="text-green-600 font-bold text-lg"> Sauvegarde DB</div>
                     <p class="text-sm text-gray-600 dark:text-gray-400 text-left">Générer un fichier SQL de secours immédiatement.</p>
                 </a>
+            </div>
 
+            {{-- Full-width table below --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-4 uppercase">Gestion des Utilisateurs</h3>
                 <table class="w-full text-left">
@@ -41,10 +44,10 @@
                             <td class="py-3 text-gray-900 dark:text-gray-100">{{ $user->name }}</td>
                             <td class="py-3 text-gray-500">{{ $user->email }}</td>
                             <td class="py-3">
-                                <span class="text-blue-500 hover:text-blue-700 text-xs font-bold transition {{ $user->role === 'admin' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
+                                <span class="text-xs font-bold px-2 py-1 rounded {{ $user->role === 'admin' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
                                     {{ strtoupper($user->role) }}
                                 </span>
-                            </td>   
+                            </td>
                             <td class="py-3 text-right">
                                 @if($user->id !== Auth::id())
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Supprimer cet utilisateur ?')">
